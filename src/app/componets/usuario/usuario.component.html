@@ -1,0 +1,129 @@
+<div>
+  
+  <div class="col-8">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+            <th scope="col"></th>
+          <th scope="col">USERNAME</th>
+          <th scope="col">NOMBRE y APELLIDOS</th>
+          <th scope="col">ACCIONES</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usuarios; let i=index" >
+          <th scope="row">{{i+1}}</th>
+          <td>{{user.username}}</td>
+          <td>{{user.nombres}}  {{user.apellidos}}</td>
+          
+          <a  data-toggle='modal' data-target='#modal1' class="btn btn" (click)="dato(user.idusuario,user.username)">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            
+  
+          </a>
+          <a data-toggle='modal'  data-target='#modal2' class="btn btn" (click)="capture(user.idusuario)">
+           
+           <i class="fa fa-plus-square" aria-hidden="true"></i>
+           
+          
+          </a>
+          
+        </tr>          
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+
+
+
+
+
+<div class="container" > 
+  <div class="modal" tabindex="-1" id="modal2" >
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #607cf8;">
+            <h4 class="modal-title" style="color:rgb(255, 255, 255); "> <i class="fa fa-cloud" aria-hidden="true"></i>
+            </h4>
+          </div>
+          <div class="modal-body">
+                   
+            
+            <div class="form-group">  
+              <input type="file" accept=".png, jpg" (change)="onUpload($event)" class="form-control" placeholder="file">
+            </div>
+            <div class="progress"> 
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+              [style.width]="(uploadPercent | async) + '%' ">  
+              </div>
+            </div>
+            <div class="form-group">
+              <input  #imageUser type="hidden" [value]="urlImage | async" >
+              
+            </div>      
+                            
+            <br>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+           
+            <button *ngIf="urlImage | async; else btnDisable"
+            type="button" class="btn btn-info" type="submit" (click)="savArchi()" ><i class="fa fa-cloud" aria-hidden="true"></i>
+            </button>
+            <ng-template #btnDisable>
+              <button type="button" class="btn btn-info" type="submit" disabled="true"   ><i class="fa fa-cloud" aria-hidden="true"></i>
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>      
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container" > 
+  <div class="modal" tabindex="-1" id="modal1" >
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #6889f8;">
+            <h4 class="modal-title" style="color:rgb(255, 255, 255); "> ENVIAR CORREO <i class="fa fa-envelope" aria-hidden="true"></i></h4>
+          </div>
+          <div class="modal-body">
+             <div class="col-md-12">
+              <label for="inputEmail4" class="form-label">Email:</label>
+              <input type="text" class="form-control" id="inputEmail4" value="{{correos.destinario}}" disabled>
+            </div>
+              
+                  <div class="col-md-12">
+                    <label for="inputEmail4" class="form-label">Titulo:</label>
+                    <input type="text" class="form-control" id="inputEmail4" [(ngModel)]="correos.titulo">
+                  </div>
+                 
+                  <div class="col-12">
+                    <label for="inputAddress" class="form-label">Mensaje:</label>
+                    <textarea type="password" class="form-control" id="inputAddress" [(ngModel)]="correos.mensaje" ></textarea>
+                  </div>      
+                            
+            <br>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" (click)="sendMail()" ><i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>      
+  </div>
